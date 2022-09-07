@@ -21,7 +21,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        //プレースホルダーについて聞く
+        
         log.debug("username={}", username);
         
         if (username == null || "".equals(username)) {
