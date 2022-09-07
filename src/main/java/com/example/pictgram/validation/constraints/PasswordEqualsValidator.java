@@ -22,7 +22,6 @@ public class PasswordEqualsValidator implements ConstraintValidator<PasswordEqua
         message = annotation.message();
     }
     
-    //ConstraintValidatorContextについて聞く
     @Override
     public boolean isValid(Object value, ConstraintValidatorContext context) {
         BeanWrapper beanWrapper = new BeanWrapperImpl(value);

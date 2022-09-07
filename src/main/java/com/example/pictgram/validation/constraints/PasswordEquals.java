@@ -19,7 +19,6 @@ public @interface PasswordEquals {
     Class<?>[] groups() default {};
     Class<? extends Payload>[] payload() default {};
     
-    //後で調べる
     @Target({ ElementType.TYPE })
     @Retention(RetentionPolicy.RUNTIME)
     @Documented
