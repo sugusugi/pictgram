@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+	layout:decorate="~{layouts/layout}">
+<head>
+<title>Pictgram</title>
+</head>
+<body>
+	<div class="users-new-wrapper" layout:fragment="contents">
+		<div class="container">
+			<div class="row p-form-top d-none d-lg-block d-xl-block d-xxl-block"></div>
+			<div class="row">
+				<main class="col-md-4 mx-auto">
+					<h1 class="text-center text-white">Sigh in</h1>
+					<form method="POST" th:action="@{/user}" th:object="${form}">
+　　　　　　　　　　　　　　　　　　　　　<div layout:replace="~{layouts/common::messages}"></div>
+						<!-- 名前入力-->
+						<div class="mb-3">
+							<label class="form-label text-white" for="user_name">Name</label>
+							<input type="text" class="form-control" th:field="*{name}" />
+							<p th:if="${#fields.hasErrors('name')}" class="error-message"
+								th:errors="*{name}"></p>
+						</div>
+						<!-- e-mailの入力 -->
+						<div class="mb-3">
+							<label class="form-label text-white" for="user_email">Email</label>
+							<input type="text" class="form-control" th:field="*{email}" />
+							<p th:if="${#fields.hasErrors('email')}" class="error-message"
+								th:errors="*{email}"></p>
+						</div>
+						<!-- パスワードの入力 -->
+						<div class="mb-3">
+							<label class="form-label text-white" for="user_password">Password</label>
+							<input type="password" class="form-control"
+								th:field="*{password}" />
+							<p th:if="${#fields.hasErrors('password')}" class="error-message"
+								th:errors="*{password}"></p>
+						</div>
+						<!-- 確認用パスワード入力欄 -->
+						<div class="mb-3">
+							<label class="form-label text-white"
+								for="user_password_confirmation">Passwordconfirmation</label>
+							<input type="password" class="form-control"
+								    th:field="*{passwordConfirmation}" />
+							<p th:if="${#fields.hasErrors('passwordConfirmation')}"
+							    class="error-message" th:errors="*{passwordConfirmation}"></p>
+						</div>
+						<input type="submit" value="登録"
+							class="btn w-100 btn-outline-light"></input>
+					</form>
+				</main>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
