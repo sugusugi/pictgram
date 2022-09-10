@@ -62,9 +62,9 @@
         
         <!-- h2database-->
         <dependency>
-  　　　　　　　　　<groupId>com.h2database</groupId>
-  　　　　　　　　　<artifactId>h2</artifactId>
-  　　　　　　</dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+        </dependency>
         
         
         <!-- Spring Security-->
