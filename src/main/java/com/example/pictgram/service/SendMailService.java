@@ -31,8 +31,8 @@ public class SendMailService {
             @Override
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, StandardCharsets.UTF_8.name());
-                helper.setFrom("pokemon50babakun@gmail.com");
-                helper.setTo("pokemon50babakun@gmail.com");
+                helper.setFrom(springMailUsername);
+                helper.setTo(springMailUsername);
                 helper.setSubject((String) context.getVariable("title"));
                 helper.setText(getMailBody("email", context), true);
             }
