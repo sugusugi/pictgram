@@ -11,11 +11,13 @@ import java.security.Principal;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.lang.reflect.Type;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.apache.commons.io.FilenameUtils;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +37,8 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.springframework.context.MessageSource;
 import org.thymeleaf.context.Context;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.http.MediaType;
 
 import com.example.pictgram.entity.Topic;
 import com.example.pictgram.entity.UserInf;
@@ -47,6 +51,7 @@ import com.example.pictgram.entity.Comment;
 import com.example.pictgram.form.CommentForm;
 import com.example.pictgram.service.S3Wrapper;
 import com.example.pictgram.service.SendMailService;
+import com.example.pictgram.bean.TopicCsv;
 
 import com.drew.imaging.ImageProcessingException;
 import org.apache.sanselan.ImageReadException;
@@ -59,6 +64,8 @@ import org.apache.sanselan.common.IImageMetadata;
 import org.apache.commons.io.IOUtils;
 import org.apache.sanselan.formats.tiff.TiffImageMetadata.GPSInfo;
 import org.apache.sanselan.formats.jpeg.JpegImageMetadata;
+import com.fasterxml.jackson.dataformat.csv.CsvMapper;
+import com.fasterxml.jackson.dataformat.csv.CsvSchema;
 
 @Controller
 public class TopicsController {
@@ -313,5 +320,18 @@ public class TopicsController {
         }catch(ImageReadException | IOException e){
             log.warn(e.getMessage(), e);
         }
+    }
+    
+    @RequestMapping(value = "/topics/topic.csv", produces = MediaType.APPLICATION_OCTET_STREAM_VALUE + "; charset=UTF-8; Content-Disposition: attachment")
+    @ResponseBody
+    public Object downloadCsv() throws IOException {
+        Iterable<Topic> topics = repository.findAll();
+        Type listType = new TypeToken<List<TopicCsv>>() {
+        }.getType();
+        List<TopicCsv> csv = modelMapper.map(topics, listType);
+        CsvMapper mapper = new CsvMapper();
+        CsvSchema schema = mapper.schemaFor(TopicCsv.class).withHeader();
+
+        return mapper.writer(schema).writeValueAsString(csv);
     }
 }
