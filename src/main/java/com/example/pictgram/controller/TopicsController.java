@@ -39,6 +39,7 @@ import org.springframework.context.MessageSource;
 import org.thymeleaf.context.Context;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 
 import com.example.pictgram.entity.Topic;
 import com.example.pictgram.entity.UserInf;
@@ -111,7 +112,12 @@ public class TopicsController {
             list.add(form);
         }
         model.addAttribute("list", list);
-
+        
+        model.addAttribute("hasFooter", true);
+        ResponseEntity<byte[]> entity = s3.download("tags");
+        String body = new String(entity.getBody());
+        model.addAttribute("tags", body.split(System.getProperty("line.separator")));
+        
         return "topics/index";
     }
 
