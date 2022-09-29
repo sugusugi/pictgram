@@ -27,6 +27,9 @@
 			}
 		</script>
 		<div class="container">
+			<form class = "text-right" action="/topics/topic.csv">
+				<button class = "download-button" type="submit" th:text="#{csvdownload}"></button>
+			</form>
 			<div class="row" th:each="topic : ${list}">
 				<a th:id="${topic.id}"></a>
 				<div class="col-md-6 mx-auto">
